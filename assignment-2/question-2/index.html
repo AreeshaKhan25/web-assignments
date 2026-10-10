@@ -95,17 +95,14 @@ img  { display: block; }
   color: #ffffff;
 }
 
+/* University crest sits on a white tile so it stays legible
+   against the dark navy header bar. */
 .logo-mark {
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Merriweather', serif;
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--nav-bg);
-  background-color: var(--accent);
+  width: 46px;
+  height: 46px;
+  padding: 4px;
+  object-fit: contain;
+  background-color: #ffffff;
   border-radius: 8px;
 }
 
@@ -448,7 +445,9 @@ img  { display: block; }
   <div class="header-inner">
 
     <div class="logo">
-      <div class="logo-mark">CP</div>
+      <img class="logo-mark"
+           src="https://crystalpng.com/wp-content/uploads/2022/02/COMSATS-University-logo.png"
+           alt="COMSATS University Islamabad logo">
       <div>
         <h1>Campus Portal</h1>
         <p>Department of Computer Science</p>
