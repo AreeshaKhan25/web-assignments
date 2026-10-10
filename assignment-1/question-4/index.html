@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUOnline Faculty Portal — Faculty Console</title>
+<!-- Google Fonts: Inter for the UI, Share Tech Mono for the captcha -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap">
+<style>
+/* ============================================================
+   Assignment 1 — Question 4
+   CUOnline Faculty Portal login screen
+   Written in plain HTML5 + CSS3 (no framework)
+   ============================================================ */
+
+/* ---------- 1. Reset and base ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: #1e293b;
+  background-color: #f0f4f8;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+/* ---------- 2. Split-screen shell ---------- */
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ---------- 3. Left brand panel ---------- */
+.brand-panel {
+  width: 58%;
+  flex-shrink: 0;
+  padding: 56px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  color: #ffffff;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+  /* Deep forest gradient field */
+  background-color: #075239;
+  background-image:
+    radial-gradient(circle at 100% 0%,  rgba(16, 120, 80, 0.45) 0%, transparent 45%),
+    radial-gradient(circle at 10% 95%,  rgba(13, 98, 66, 0.50) 0%, transparent 40%),
+    radial-gradient(circle at -5% 45%,  rgba(6, 68, 46, 0.30) 0%, transparent 35%);
+}
+
+/* Ambient organic glow rings behind the content */
+.glow-top {
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 130, 88, 0.28) 0%, rgba(16, 130, 88, 0.05) 70%, transparent 100%);
+  pointer-events: none;
+}
+
+.glow-bottom {
+  position: absolute;
+  bottom: -150px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 102, 69, 0.32) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.brand-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Logo badge */
+.logo-badge {
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 10px 16px;
+  border: 1px solid rgba(14, 98, 68, 0.8);
+  border-radius: 12px;
+  background-color: rgba(4, 51, 35, 0.9);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.logo-badge h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.logo-badge .badge-sub {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #34d399;
+}
+
+.logo-badge .badge-version {
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(110, 231, 183, 0.75);
+}
+
+/* Headline block */
+.brand-title {
+  max-width: 36rem;
+  margin-bottom: 16px;
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.brand-lead {
+  max-width: 32rem;
+  margin-bottom: 32px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(209, 250, 229, 0.9);
+}
+
+/* Feature list */
+.feature-list {
+  list-style: none;
+  max-width: 28rem;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.feature-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(4, 120, 87, 0.6);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.feature-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.feature-list span.feature-text {
+  font-size: 16px;
+  color: #d1fae5;
+}
+
+/* Quote callout */
+.brand-quote {
+  max-width: 28rem;
+  margin-top: 40px;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid #34d399;
+}
+
+.brand-quote p {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(167, 243, 208, 0.95);
+}
+
+.quote-mark {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+.brand-quote footer {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  color: rgba(110, 231, 183, 0.7);
+}
+
+/* Help bar at the bottom of the brand panel */
+.brand-help {
+  position: relative;
+  z-index: 10;
+  padding-top: 56px;
+  font-size: 12px;
+  color: rgba(167, 243, 208, 0.8);
+}
+
+.brand-help a {
+  color: inherit;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.brand-help a:hover {
+  color: #ffffff;
+}
+
+/* ---------- 4. Right login panel ---------- */
+.login-panel {
+  width: 42%;
+  flex-grow: 1;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f8fa;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+  position: relative;
+  padding: 36px;
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px -8px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Small emerald accent pill at the top of the card */
+.accent-pill {
+  width: 36px;
+  height: 6px;
+  margin-bottom: 24px;
+  border-radius: 9999px;
+  background-color: #0a583d;
+}
+
+.card-head {
+  margin-bottom: 20px;
+}
+
+.card-head h2 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #0f172a;
+}
+
+.card-head p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Password-policy announcement pill */
+.policy-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 8px 14px;
+  border: 1px solid rgba(167, 243, 208, 0.9);
+  border-radius: 8px;
+  background-color: rgba(236, 253, 245, 0.7);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.policy-pill:hover {
+  background-color: rgba(209, 250, 229, 0.6);
+}
+
+.policy-pill .policy-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #064e3b;
+}
+
+.policy-pill svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.policy-pill .icon-key {
+  color: #047857;
+}
+
+.policy-pill .icon-chevron {
+  color: #475569;
+}
+
+/* ---------- 5. Form fields ---------- */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.input-wrap {
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1e293b;
+  background-color: #fbfdfb;
+  border: 1px solid #059669;
+  border-radius: 8px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #059669;
+  box-shadow: 0 0 0 1px #059669;
+}
+
+.input-email {
+  padding-right: 36px;
+}
+
+.input-password {
+  padding-right: 64px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+/* Green "validated" tick parked inside the email field */
+.input-check {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding-right: 12px;
+  color: #059669;
+  pointer-events: none;
+}
+
+.input-check svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Tick + eye toggle group inside the password field */
+.input-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 10px;
+}
+
+.input-actions svg {
+  width: 16px;
+  height: 16px;
+}
+
+.input-actions .tick {
+  color: #059669;
+}
+
+.eye-btn {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  color: #64748b;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.eye-btn:hover {
+  color: #1e293b;
+}
+
+/* ---------- 6. Security code (captcha) row ---------- */
+.captcha-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.captcha-input-wrap {
+  flex-grow: 1;
+}
+
+.captcha-input {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  color: #334155;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.captcha-input::placeholder {
+  color: #94a3b8;
+}
+
+.captcha-input:focus {
+  outline: none;
+  border-color: #059669;
+  box-shadow: 0 0 0 1px #059669;
+}
+
+/* The distorted security-code display itself */
+.captcha-box {
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  background: #0d0a14;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Two crossing noise strokes over the code */
+.captcha-box::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: rgba(217, 70, 239, 0.55);
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.captcha-box::after {
+  content: '';
+  position: absolute;
+  top: 55%;
+  left: 20%;
+  width: 65%;
+  height: 1.5px;
+  background: rgba(56, 189, 248, 0.45);
+  transform: rotate(8deg);
+  pointer-events: none;
+}
+
+.captcha-box span {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.captcha-refresh {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.captcha-refresh:hover {
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+.captcha-refresh svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- 7. Options row and submit ---------- */
+.options-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+  margin-bottom: 16px;
+}
+
+.remember-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.remember-label input {
+  width: 16px;
+  height: 16px;
+  accent-color: #047857;
+}
+
+.forgot-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: #065f46;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.forgot-link:hover {
+  color: #064e3b;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 10px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: #ffffff;
+  background-color: #0a583d;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-login:hover {
+  background-color: #084831;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-login:active {
+  background-color: #063b27;
+}
+
+/* ---------- 8. Card footer notes ---------- */
+.card-note {
+  margin-top: 16px;
+  padding: 0 8px;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+  color: #64748b;
+}
+
+.card-copyright {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.card-copyright strong {
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* ---------- 9. Responsive ---------- */
+@media (max-width: 1024px) {
+  .screen {
+    flex-direction: column;
+  }
+
+  .brand-panel,
+  .login-panel {
+    width: 100%;
+  }
+
+  .brand-panel {
+    padding: 40px 32px;
+  }
+
+  .brand-title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-panel {
+    padding: 40px 24px;
+  }
+
+  .brand-title {
+    font-size: 28px;
+  }
+
+  .brand-lead,
+  .feature-list span.feature-text {
+    font-size: 14px;
+  }
+
+  .login-panel {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 28px;
+  }
+
+  .input-field,
+  .captcha-input {
+    font-size: 12px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- BEGIN: MainContainer -->
+<main class="screen">
+
+  <!-- BEGIN: LeftBrandSection -->
+  <section class="brand-panel">
+    <!-- Background ambient glows -->
+    <div class="glow-top" aria-hidden="true"></div>
+    <div class="glow-bottom" aria-hidden="true"></div>
+
+    <div class="brand-content">
+      <!-- Logo and portal identification -->
+      <header class="logo-badge">
+        <h1>CUONLINE</h1>
+        <p class="badge-sub">Faculty Portal</p>
+        <p class="badge-version">Version 3.0</p>
+      </header>
+
+      <!-- Main title and intro copy -->
+      <h2 class="brand-title">Faculty Console</h2>
+      <p class="brand-lead">
+        Your courses, attendance, OBE mappings and course folders — one secure workspace for every semester task.
+      </p>
+
+      <!-- Key feature highlights -->
+      <ul class="feature-list">
+        <li>
+          <span class="feature-icon">
+            <!-- Academic cap -->
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 13.5l-7-3.82V17l7 4 7-4v-4.32l-7 3.82z"></path></svg>
+          </span>
+          <span class="feature-text">Course &amp; attendance management</span>
+        </li>
+        <li>
+          <span class="feature-icon">
+            <!-- Bar chart -->
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 19h16v2H2V3h2v16zm3-2h2v-6H7v6zm4 0h2V7h-2v10zm4 0h2v-9h-2v9z"></path></svg>
+          </span>
+          <span class="feature-text">OBE / CLO analytics at a glance</span>
+        </li>
+        <li>
+          <span class="feature-icon">
+            <!-- Folder -->
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path></svg>
+          </span>
+          <span class="feature-text">Course folder uploads &amp; reviews</span>
+        </li>
+        <li>
+          <span class="feature-icon">
+            <!-- Shield -->
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 16l-4-4 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z"></path></svg>
+          </span>
+          <span class="feature-text">Session-secured access audit</span>
+        </li>
+      </ul>
+
+      <!-- Quote callout -->
+      <blockquote class="brand-quote">
+        <p><span class="quote-mark">&ldquo;</span>Where faculty efficiency meets academic excellence.</p>
+        <footer>— HEMS Faculty Console Team</footer>
+      </blockquote>
+    </div>
+
+    <!-- Bottom help bar -->
+    <footer class="brand-help">
+      Need help? <a href="#">Contact or send feedback</a>
+    </footer>
+  </section>
+  <!-- END: LeftBrandSection -->
+
+  <!-- BEGIN: RightLoginSection -->
+  <section class="login-panel">
+    <article class="login-card">
+
+      <!-- Top emerald accent pill -->
+      <div class="accent-pill"></div>
+
+      <header class="card-head">
+        <h2>Welcome back</h2>
+        <p>Sign in to your faculty account to continue.</p>
+      </header>
+
+      <!-- Password policy announcement -->
+      <aside class="policy-pill">
+        <div class="policy-text">
+          <svg class="icon-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+          </svg>
+          <span>New password policy is in effect</span>
+        </div>
+        <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 5l7 7-7 7"></path>
+        </svg>
+      </aside>
+
+      <!-- BEGIN: LoginForm -->
+      <form action="#" method="POST">
+
+        <!-- Email / username -->
+        <div class="form-group">
+          <label for="faculty-email">Email or username</label>
+          <div class="input-wrap">
+            <input class="input-field input-email" type="text" id="faculty-email" name="email"
+                   value="shahidkhan@ciitwah.edu.pk" required>
+            <div class="input-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="faculty-password">Password</label>
+          <div class="input-wrap">
+            <input class="input-field input-password" type="password" id="faculty-password" name="password"
+                   value="sampleFacultyPassword123" required>
+            <div class="input-actions">
+              <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 13l4 4L19 7"></path>
+              </svg>
+              <button class="eye-btn" type="button" id="togglePassword" aria-label="Toggle password visibility">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security code (captcha) -->
+        <div class="form-group">
+          <label for="faculty-captcha">Security code</label>
+          <div class="captcha-row">
+            <div class="captcha-input-wrap">
+              <input class="captcha-input" type="text" id="faculty-captcha" name="captcha"
+                     placeholder="Enter the code" maxlength="6" required>
+            </div>
+            <div class="captcha-box"><span>86512</span></div>
+            <button class="captcha-refresh" type="button" title="Refresh security code">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember me / forgot password -->
+        <div class="options-row">
+          <label class="remember-label">
+            <input type="checkbox" name="remember">
+            <span>Remember me</span>
+          </label>
+          <a class="forgot-link" href="#">Forgot password?</a>
+        </div>
+
+        <button class="btn-login" type="submit">Log In</button>
+      </form>
+      <!-- END: LoginForm -->
+
+      <p class="card-note">
+        New faculty member? Please coordinate with your departmental coordinator to get your account created.
+      </p>
+
+      <div class="card-copyright">
+        Copyright © 2018 | All Rights Reserved by <strong>CUOnline CUI</strong>
+      </div>
+    </article>
+  </section>
+  <!-- END: RightLoginSection -->
+
+</main>
+<!-- END: MainContainer -->
+
+<script>
+  /* Show / hide the password when the eye button is clicked */
+  var toggleBtn = document.getElementById('togglePassword');
+  var passwordInput = document.getElementById('faculty-password');
+
+  if (toggleBtn && passwordInput) {
+    toggleBtn.addEventListener('click', function () {
+      var isPassword = passwordInput.getAttribute('type') === 'password';
+      passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+    });
+  }
+</script>
+
+</body>
+</html>

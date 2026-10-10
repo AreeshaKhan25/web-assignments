@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talk to us about content marketing</title>
+<style>
+/* ============================================================
+   Assignment 2 — Question 3
+   "Talk to us about content marketing" contact page
+   Written in plain HTML5 + CSS3 (no framework)
+   ============================================================ */
+
+/* ---------- 1. Reset ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- 2. Page background ----------
+   A teal field with a subtle geometric hexagon watermark, built
+   entirely from layered CSS gradients instead of an image file. */
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+
+  background-color: #5abdbd;
+  background-image:
+    radial-gradient(circle at 85% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 45% 40%, rgba(0, 0, 0, 0.03) 0%, transparent 50%),
+    linear-gradient(30deg,  rgba(255,255,255,0.04) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.04) 87.5%, rgba(255,255,255,0.04)),
+    linear-gradient(150deg, rgba(255,255,255,0.04) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.04) 87.5%, rgba(255,255,255,0.04)),
+    linear-gradient(30deg,  rgba(255,255,255,0.04) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.04) 87.5%, rgba(255,255,255,0.04)),
+    linear-gradient(150deg, rgba(255,255,255,0.04) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.04) 87.5%, rgba(255,255,255,0.04)),
+    linear-gradient(60deg,  rgba(255,255,255,0.03) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03)),
+    linear-gradient(60deg,  rgba(255,255,255,0.03) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03));
+  background-size:
+    100% 100%, 100% 100%, 100% 100%,
+    80px 140px, 80px 140px, 80px 140px, 80px 140px, 80px 140px, 80px 140px;
+}
+
+/* ---------- 3. Two-column layout ---------- */
+.page {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 32px 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 5fr 7fr;   /* 5 / 12 and 7 / 12 split */
+  gap: 56px;
+  align-items: start;
+}
+
+/* ---------- 4. Left intro column ---------- */
+.intro h1 {
+  margin-bottom: 16px;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.intro-lead {
+  max-width: 24rem;
+  margin-bottom: 32px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Circular avatar inside a thick white ring */
+.avatar-frame {
+  width: 176px;
+  height: 176px;
+  margin-bottom: 32px;
+  border: 5px solid #ffffff;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #4aa5a5;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.avatar-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* LinkedIn contact row */
+.linkedin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.linkedin-link:hover {
+  opacity: 0.8;
+}
+
+.linkedin-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  color: #5abdbd;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+}
+
+.linkedin-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* ---------- 5. Right form column ---------- */
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  color: #ffffff;
+}
+
+/* Shared look for every white control on the teal background */
+.form-input-white {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  color: #333333;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  outline: none;
+  transition: box-shadow 0.15s ease;
+}
+
+.form-input-white:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+input.form-input-white,
+select.form-input-white {
+  height: 44px;
+  padding: 0 14px;
+}
+
+textarea.form-input-white {
+  padding: 14px;
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Custom select: native arrow removed, our own chevron drawn on top */
+.select-wrap {
+  position: relative;
+}
+
+select.form-input-white {
+  padding-right: 32px;
+  color: #374151;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.select-chevron {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  color: #4b5563;
+  pointer-events: none;
+}
+
+.select-chevron svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- 6. Submit button ---------- */
+.btn-send {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #333333;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.15s ease-in-out, transform 0.1s ease;
+}
+
+.btn-send:hover {
+  background-color: #f3f4f6;
+}
+
+.btn-send:active {
+  transform: scale(0.99);
+}
+
+/* ---------- 7. Responsive ---------- */
+@media (max-width: 900px) {
+  body {
+    padding: 32px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .intro h1 {
+    font-size: 32px;
+  }
+
+  .avatar-frame {
+    width: 144px;
+    height: 144px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 16px;
+  }
+
+  .intro-lead {
+    font-size: 14px;
+  }
+
+  .btn-send {
+    font-size: 12px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- BEGIN: MainContentContainer -->
+<main class="page">
+  <div class="layout">
+
+    <!-- BEGIN: LeftInfoColumn -->
+    <section class="intro">
+      <h1>Talk to us about content marketing.</h1>
+      <p class="intro-lead">Contact us today to talk to Zoe about your content marketing strategy.</p>
+
+      <!-- Profile avatar with white border frame -->
+      <div class="avatar-frame">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3BiNwnzOeKnWy7RpV_y6B271AefvXEpa0uy3pjAPH9O_enGNE1oieRSBhbYREVQToV42K2nSnargsR01PRRL89rcxEyyzdb-CFOmjR9IFrsfFmE69CODbawue3ksknKnCi5HFqzvF-8KBOIjaB62XadBLeR22PD8Wc_4W4iae8xg_onaWz3oG34DLS_6cZg75tOqh5qzKWjE7DOJzGijz8SswM7Is8TDzTGGukErRtJ-CD3yLB_lHwj2maCFSDpZaGw" alt="Zoe">
+      </div>
+
+      <!-- LinkedIn contact link -->
+      <a class="linkedin-link" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="Contact Zoe on LinkedIn">
+        <span class="linkedin-badge">in</span>
+        <span class="linkedin-label">Contact Zoe on LinkedIn</span>
+      </a>
+    </section>
+    <!-- END: LeftInfoColumn -->
+
+    <!-- BEGIN: RightFormColumn -->
+    <section>
+      <form action="#" method="POST" onsubmit="event.preventDefault();">
+
+        <div class="field">
+          <label for="name">Name*</label>
+          <input class="form-input-white" type="text" id="name" name="name" required>
+        </div>
+
+        <div class="field">
+          <label for="job-title">Job Title*</label>
+          <input class="form-input-white" type="text" id="job-title" name="job-title" required>
+        </div>
+
+        <div class="field">
+          <label for="email-address">Email Address*</label>
+          <input class="form-input-white" type="email" id="email-address" name="email-address" required>
+        </div>
+
+        <div class="field">
+          <label for="budget">Your Budget*</label>
+          <div class="select-wrap">
+            <select class="form-input-white" id="budget" name="budget" required>
+              <option value="" disabled selected>&mdash;Please choose an option&mdash;</option>
+              <option value="under-5k">Under $5,000</option>
+              <option value="5k-10k">$5,000 - $10,000</option>
+              <option value="10k-25k">$10,000 - $25,000</option>
+              <option value="25k-plus">$25,000+</option>
+            </select>
+            <!-- Dropdown chevron arrow -->
+            <div class="select-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">Message*</label>
+          <textarea class="form-input-white" id="message" name="message" rows="6" required></textarea>
+        </div>
+
+        <button class="btn-send" type="submit">Send</button>
+      </form>
+    </section>
+    <!-- END: RightFormColumn -->
+
+  </div>
+</main>
+<!-- END: MainContentContainer -->
+
+</body>
+</html>

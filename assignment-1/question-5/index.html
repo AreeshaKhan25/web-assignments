@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasty Bites Restaurant &amp; Cafe</title>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts: Playfair Display for headings, Poppins for body text -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+/* ============================================================
+   Assignment 1 — Question 5
+   Tasty Bites Restaurant & Cafe — menu page
+   Written in plain HTML5 + CSS3 (no framework)
+   ============================================================ */
+
+/* ---------- 1. Design tokens ----------
+   Every colour used in the page is declared once here, so the
+   four menu categories can be re-themed from a single place. */
+:root {
+  --brand-green:      #0e4d2e;
+  --brand-green-dark: #093c21;
+  --pill-yellow:      #fae38c;
+  --banner-bg:        #fbf6e9;
+  --banner-border:    #e6dbc0;
+
+  --starters:         #3b8744;
+  --starters-hover:   #327339;
+  --starters-light:   #eef8ef;
+  --starters-border:  #a2cf9c;
+
+  --main:             #e06d26;
+  --main-hover:       #cb5c18;
+  --main-light:       #fdf3ec;
+  --main-border:      #facdb3;
+
+  --desserts:         #6c5699;
+  --desserts-hover:   #5b4683;
+  --desserts-light:   #f5eff9;
+  --desserts-border:  #d6cbdf;
+
+  --drinks:           #2684c6;
+  --drinks-hover:     #1f70a9;
+  --drinks-light:     #edf7fc;
+  --drinks-border:    #bde0f5;
+}
+
+/* ---------- 2. Reset and base ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  font-family: 'Poppins', sans-serif;
+  color: #333333;
+  background-color: #f3f4f6;
+}
+
+/* Playfair Display is reserved for display headings */
+.font-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+img {
+  display: block;
+}
+
+/* Outer "browser window" that holds the whole site */
+.site {
+  width: 100%;
+  max-width: 1020px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* ---------- 3. Header ---------- */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 32px;
+  background-color: var(--brand-green);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+}
+
+.logo-mark .fa-utensils {
+  font-size: 24px;
+  margin-left: -4px;
+}
+
+.logo h1 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.025em;
+}
+
+.logo p {
+  font-size: 12px;
+  font-weight: 400;
+  color: #e5e7eb;
+}
+
+/* Horizontal navigation */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.main-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.main-nav a:hover {
+  color: #fef08a;
+}
+
+/* The highlighted "current page" pill */
+.main-nav a.nav-active {
+  padding: 6px 20px;
+  background-color: var(--pill-yellow);
+  color: #000000;
+  font-weight: 600;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.15s ease;
+}
+
+.main-nav a.nav-active:hover {
+  background-color: #fde047;
+}
+
+/* ---------- 4. Main content ---------- */
+.site-main {
+  padding: 32px;
+}
+
+/* ---------- 5. Hero banner ---------- */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 160px;
+  margin-bottom: 28px;
+  background-color: var(--banner-bg);
+  border: 1px solid var(--banner-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.hero-text {
+  width: 60%;
+  padding: 32px;
+  z-index: 10;
+}
+
+.hero-text h2 {
+  margin-bottom: 12px;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #0d4b2b;
+}
+
+.hero-tagline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #374151;
+}
+
+.hero-tagline .dot {
+  font-size: 12px;
+  color: #1f2937;
+}
+
+.hero-media {
+  width: 40%;
+  align-self: stretch;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Soft fade so the photo melts into the cream banner */
+.hero-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 96px;
+  background-image: linear-gradient(to right, var(--banner-bg), transparent);
+}
+
+/* ---------- 6. Menu grid ---------- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+/* One coloured panel per food category */
+.category {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.category-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: #ffffff;
+}
+
+.category-head i {
+  font-size: 20px;
+}
+
+.category-head h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Three dish cards side by side inside each category */
+.item-grid {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px;
+  align-items: stretch;
+}
+
+/* ---------- 7. Dish card ---------- */
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  text-align: left;
+  background-color: #ffffff;
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.item-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item h4 {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #111827;
+}
+
+.item p {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #4b5563;
+}
+
+/* The price doubles as the order button */
+.price-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 6px 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+/* ---------- 8. Category colour themes ---------- */
+.cat-starters  { background-color: var(--starters-light); border: 1px solid var(--starters-border); }
+.cat-starters  .category-head { background-color: var(--starters); }
+.cat-starters  .price-btn     { background-color: var(--starters); }
+.cat-starters  .price-btn:hover { background-color: var(--starters-hover); }
+
+.cat-main      { background-color: var(--main-light); border: 1px solid var(--main-border); }
+.cat-main      .category-head { background-color: var(--main); }
+.cat-main      .price-btn     { background-color: var(--main); }
+.cat-main      .price-btn:hover { background-color: var(--main-hover); }
+
+.cat-desserts  { background-color: var(--desserts-light); border: 1px solid var(--desserts-border); }
+.cat-desserts  .category-head { background-color: var(--desserts); }
+.cat-desserts  .price-btn     { background-color: var(--desserts); }
+.cat-desserts  .price-btn:hover { background-color: var(--desserts-hover); }
+
+.cat-drinks    { background-color: var(--drinks-light); border: 1px solid var(--drinks-border); }
+.cat-drinks    .category-head { background-color: var(--drinks); }
+.cat-drinks    .price-btn     { background-color: var(--drinks); }
+.cat-drinks    .price-btn:hover { background-color: var(--drinks-hover); }
+
+/* ---------- 9. Footer ---------- */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 32px;
+  color: #ffffff;
+  background-color: var(--brand-green);
+  border-top: 1px solid var(--brand-green-dark);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-brand .logo-mark {
+  font-size: 30px;
+}
+
+.footer-brand h2 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.footer-brand p {
+  font-size: 11px;
+  color: #e5e7eb;
+}
+
+.footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 12px;
+  color: #e5e7eb;
+}
+
+.footer-divider {
+  width: 1px;
+  height: 40px;
+  background-color: #059669;
+}
+
+.footer-contact div > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.footer-contact i {
+  width: 16px;
+  color: #6ee7b7;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-social a {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--brand-green);
+  background-color: #ffffff;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.footer-social a:hover {
+  background-color: #e5e7eb;
+}
+
+/* ---------- 10. Responsive ---------- */
+@media (max-width: 900px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-text,
+  .hero-media {
+    width: 100%;
+  }
+
+  .hero-media {
+    height: 192px;
+  }
+
+  .hero-fade {
+    display: none;
+  }
+
+  .hero-text h2 {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header,
+  .site-footer {
+    padding: 16px 20px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .main-nav {
+    gap: 20px;
+  }
+
+  .site-main {
+    padding: 24px 16px;
+  }
+
+  .hero-text {
+    padding: 24px;
+  }
+
+  .item h4 {
+    font-size: 12px;
+  }
+
+  .item p {
+    font-size: 10px;
+  }
+
+  .footer-divider {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Main website container -->
+<div class="site">
+
+  <!-- BEGIN: MainHeader -->
+  <header class="site-header">
+    <div class="logo">
+      <!-- Cloche + fork logo mark -->
+      <span class="logo-mark">
+        <i class="fa-solid fa-bell-concierge"></i>
+        <i class="fa-solid fa-utensils"></i>
+      </span>
+      <div>
+        <h1 class="font-heading">Tasty Bites</h1>
+        <p>Restaurant &amp; Cafe</p>
+      </div>
+    </div>
+
+    <!-- Horizontal navigation list -->
+    <nav class="main-nav">
+      <a class="nav-active" href="#">Home</a>
+      <a href="#">Menu</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+  <!-- END: MainHeader -->
+
+  <main class="site-main">
+
+    <!-- BEGIN: HeroBanner -->
+    <section class="hero" aria-label="Hero Banner">
+      <div class="hero-text">
+        <h2 class="font-heading">Good Food, Good Mood</h2>
+        <p class="hero-tagline">
+          <span>Fresh ingredients</span>
+          <span class="dot">•</span>
+          <span>Great taste</span>
+          <span class="dot">•</span>
+          <span>Always</span>
+        </p>
+      </div>
+      <div class="hero-media">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtqn4Xp8np8nLOLMsT_IpOx2rhiy9w6V0KD6SGlCQ7iiBBkiF9TFAH1QPkqRI98mFjmylwVLpZ7I0itsrL8TFFQcqCT7R4xcaQbrHWfoAE32JE4LNnf32ji7sSso_6-VYbdEIYDzINZZqDqfQuEeqn2Vet-uOQ8GBATtVQL4IPsk6_tqoVFKl2DF_t6uANa88V4lvaYkUIoZVBsgCGuWSGjDUA7BJo4s--uxdghSGUe01Ah-pbznrL" alt="Grilled chicken dish with roasted tomatoes and basil">
+        <div class="hero-fade"></div>
+      </div>
+    </section>
+    <!-- END: HeroBanner -->
+
+    <!-- BEGIN: MenuSection -->
+    <div class="menu-grid">
+
+      <!-- Category 1: Starters -->
+      <section class="category cat-starters" aria-labelledby="starters-heading">
+        <div class="category-head">
+          <i class="fa-solid fa-chart-pie"></i>
+          <h3 class="font-heading" id="starters-heading">Starters</h3>
+        </div>
+        <div class="item-grid">
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwhKSrZP2sUR8G7suT11r_RLFPdfjPhH-jYl3HCr71U5FgLnz5W9_cu--cBd5GnEsRsiQRInLaxEf142FFok1SHbQL-6EnrC5kkcvczewsu28uTMcGIunC48K3dDz7ImgAz6mv5iTS-Rz-1oof0XQUpM9xyVm0Y-zIqvNWr0qu5YjKoFytvDDPLKqAemm3eOcO-uf23d01f8ffrx7MCGF9SM7ZofjmJHM-eUo3-u0f0k-mWMw55a8o" alt="Spring Rolls">
+              </div>
+              <h4>Spring Rolls</h4>
+              <p>Crispy rolls filled with vegetables and spices.</p>
+            </div>
+            <button class="price-btn">Rs. 350</button>
+          </article>
+
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDbY0LethjKDhU1vgoLKV26F58vssFy0n4v_3VR5LboCpdrr8WcnEaqnmofpzEmpPUQzvC5n3FzpfjDtq-D1PpPc-ikAHgzcQWIJVVSKvJ8Oh-P5MJD6mCIBWMdTSjxuayIl2lWA3P9wQCHhurN9rMBdlSRndlI8VLJYarG6gkHQT19D3XgPR4jUBtKr88HOP--yE0IIBJI_iby46LxMIxidD3o6MsdzpmzkJb2MEUelfVQlB5dMxm" alt="Chicken Wings">
+              </div>
+              <h4>Chicken Wings</h4>
+              <p>Spicy and crispy chicken wings.</p>
+            </div>
+            <button class="price-btn">Rs. 450</button>
+          </article>
+
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRgc8wTJ_fFwoMlMuqexPoTfHvxAW9S3H-lKJIcL3RcjxQweJVxh08fMj_gzb2-uSTwuQ2WeciKdkpf1d2zssCWY1xMI79eTI_tspkBjvu8hK10Bvb0lyeotCxJgPgK-ZHGQ49iywnPXnH4WHbEjrDMblLqmdqS6AkDYx3Z6EKTrZb0TaBeJav7pSHQAjlBsvSCzQATLMmcw_ZQG-2vmcnlYs8VUYr0fwMZyZZ1yGe9SQtdhtsXbiX" alt="Garlic Bread">
+              </div>
+              <h4>Garlic Bread</h4>
+              <p>Freshly baked bread with garlic and herbs.</p>
+            </div>
+            <button class="price-btn">Rs. 300</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- Category 2: Main Course -->
+      <section class="category cat-main" aria-labelledby="main-heading">
+        <div class="category-head">
+          <i class="fa-solid fa-utensils"></i>
+          <h3 class="font-heading" id="main-heading">Main Course</h3>
+        </div>
+        <div class="item-grid">
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlVzHINyKq_W2tvuNxI-ldn92TyMG6laJPaHn7XJqU-yU8UNQreaybe1stbis1EgMb2BNlNvT9iCQzGlZb-5oa_PGIDUQiZRup-k55ES65H7kmoIoviNCzeUNWSMiRTRDwW-vRHGn4BDDlxfTec_f6xv5_HgrpKRzRCyMcWAaI4v_sI3lbvjhDK0MCqmuolbVth7ZRXkCawXbhpNaaSteLDzYlQD9EetGPAX6cEYzgPDf63t06YJJ-" alt="Grilled Chicken">
+              </div>
+              <h4>Grilled Chicken</h4>
+              <p>Juicy grilled chicken with vegetables.</p>
+            </div>
+            <button class="price-btn">Rs. 650</button>
+          </article>
+
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW_KIZgoryPObhbQkS7IUyp2-8GjkvxxUQzMXcG4XnVZzsxgWQ_7V-TweEu-qY2TK8W-fvBpXbNUAOuXb_rLymGLepXabXeeVY_nM1ZJ4OnVs54KkKGOK7UNxawXez4UM7rDu54I25BzzBevuTtirNXAVmzgDUhZR-22uv0z_Xxc6kxYJMOAlV1Kwndlr5GPUp-1X1mTPZ9oHXtShY9TQZWcUQFxu7NmdEdNdQyI29Rl5eN4UOtygz" alt="Beef Pasta">
+              </div>
+              <h4>Beef Pasta</h4>
+              <p>Pasta with rich beef sauce.</p>
+            </div>
+            <button class="price-btn">Rs. 600</button>
+          </article>
+
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkCYFNfGnbF_RrhlTZr0bXIExIMgazK_YpscHcRXg_9Dwwgm50Bky1s2zeYAqX4J4HkRPNNxLchUHZxg0_J26X-OiIqoB0X74wzClUoXtWlt7iuApYudvqQnDV2HUayZ0uhj1I-ZqyIliBL1owQeXgBOOV80hcIkNjjm4bJMRPXKDWk583ICJMM8-u4KAZtjOv3vAa72677czDwr-mF6Kx5iwfTZVecoNLeIu75flH1yNFWUk-XbfP" alt="Vegetable Pizza">
+              </div>
+              <h4>Vegetable Pizza</h4>
+              <p>Loaded with fresh vegetables and cheese.</p>
+            </div>
+            <button class="price-btn">Rs. 550</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- Category 3: Desserts -->
+      <section class="category cat-desserts" aria-labelledby="desserts-heading">
+        <div class="category-head">
+          <i class="fa-solid fa-cake-candles"></i>
+          <h3 class="font-heading" id="desserts-heading">Desserts</h3>
+        </div>
+        <div class="item-grid">
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzotMyorHWREGw1vvg0-FBcoTmn4R7eMt2kDvllgudUD0SZUYBNC_9PmUNlxrqL02UJ5eiE1k3a3XS-5-Fqtn2CAMfyM8nbr_DtfSDvSOArAL7x9llCtq0whCuWQ40l-kDm2Kh4pzOXrQ249xMZtq-EPa7-IKGXMF2leOsUj2TbXVX2odSGLTebi3b7SqYYf9O5Un1kRx5wDifG_QvaXvm2pa5jp8lzyvN7TRzksYsO_hbrJqeYaM5" alt="Chocolate Cake">
+              </div>
+              <h4>Chocolate Cake</h4>
+              <p>Rich and creamy chocolate cake.</p>
+            </div>
+            <button class="price-btn">Rs. 250</button>
+          </article>
+
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2uBXNWILIIvQQbZ1qsEiOWf0pEyMXrBz8PC_RLv7r9DoQnNNdHIZ7mChD0hSQWfyKXlcfTeN89uRaVvFmt8idA0tppAil4cqCn6h4ZX4c1ViGsyPH6TkQWUhV4nK0DEWfdqhwvq8q7qziiDT_gj6Tn0o1ZLt8bH0KNRnCUU2WpnjUOhKKkOswcv75nVCprfApnOG2WPK3EkC-_-PNAxGHURzTOCQl5ezg87TFQta_gIt6rswvKfFi" alt="Ice Cream">
+              </div>
+              <h4>Ice Cream</h4>
+              <p>Vanilla, chocolate and strawberry.</p>
+            </div>
+            <button class="price-btn">Rs. 200</button>
+          </article>
+
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4GajJ8QGqvM2GODKny6bUoBWhVikT0aC4rPppA0vK6W6-c0FvSoL5bvE79ZkUtLF-6aH-H9VqB560Yc6m9xsneljXDSc49nDxyjxl4v5WEDQ5kqqFIX0TI4lGouCrpxFkLWIfyU6jETbMgf_1aPUrewwMKvs6_LmETEvDHvElq3DbBRT9hT6aXO788vZlFWJr_KigO9B7TY5mxrTf-DylMX50eMOxk-r-uRTCprd7PnY0mfT4VWKt" alt="Cheesecake">
+              </div>
+              <h4>Cheesecake</h4>
+              <p>Classic cheesecake with berry topping.</p>
+            </div>
+            <button class="price-btn">Rs. 300</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- Category 4: Drinks -->
+      <section class="category cat-drinks" aria-labelledby="drinks-heading">
+        <div class="category-head">
+          <i class="fa-solid fa-mug-hot"></i>
+          <h3 class="font-heading" id="drinks-heading">Drinks</h3>
+        </div>
+        <div class="item-grid">
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJQUDACFVlgHSBpsMwqBynaiFLXvkTka7sDBSOuM16UBWbbY3O5ElkOYEpTlTD69uywWo-3h0MTFZ7hFHWmKVWXKxTvTegTWIYM62MwhnnqYPZ9wfztVDDUJBZOk7Rx8dYQpk1fId_fegi0VCDplen1k6WaPUSVMeo2XAJcX09YY_H4vqlzXdrJxrGK3pJdfQ5IRniNQaTM5WJ6jaqyebq7XvV3_WJnaAB5TRvKOTP-tgL2HR29AXV" alt="Cold Coffee">
+              </div>
+              <h4>Cold Coffee</h4>
+              <p>Chilled coffee with creamy topping.</p>
+            </div>
+            <button class="price-btn">Rs. 180</button>
+          </article>
+
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZlG1QzTJhIJ1_4Z8IiXVFq5d6flcPCpflSbb6d7oXUIdb6aXRbOlRAHIC8YYchdz6kl0zILD3gzTbdF-MkcbVAe55GeeKrgcQSQTXGOFl01OHMGGAuea5X67jv_OCz0X9nxuqXS4el-n3-bNEpzAexEUhsPbQbvwfmWQ57qcAZH3ITPhOlIDW2L6iZGHVk2-pLl2BpMICorUEaZCWJZ-UmFteIYPVSPi1FDTDBLwXqQfkVOGq433V" alt="Fresh Lime Soda">
+              </div>
+              <h4>Fresh Lime Soda</h4>
+              <p>Refreshing and healthy drink.</p>
+            </div>
+            <button class="price-btn">Rs. 150</button>
+          </article>
+
+          <article class="item">
+            <div>
+              <div class="item-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt-3O8VcdYlog5zz9Sp59cTRxxkZO3wDsX_jZeiWMgoXGKpeyffZnou75xx4oYqNJmCdO4uiPvCFdBGyQ96yOqJB3tZjP_KGbcMid0JK94WRhgvs3pQXnnElEw6pVjxeVY4ALHOkc2CKYUNUn3Ag2qpMLtvWlgo4pufv_gIzq0XvroQPAQUMEXcADRY0VReilRyR71XKck2XXJzYwOQ_I5VeT-EQQOJHasscdXni96tWZ5KDTRLVTh" alt="Mango Shake">
+              </div>
+              <h4>Mango Shake</h4>
+              <p>Thick and delicious mango shake.</p>
+            </div>
+            <button class="price-btn">Rs. 200</button>
+          </article>
+        </div>
+      </section>
+
+    </div>
+    <!-- END: MenuSection -->
+  </main>
+
+  <!-- BEGIN: MainFooter -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <span class="logo-mark"><i class="fa-solid fa-bell-concierge"></i></span>
+      <div>
+        <h2 class="font-heading">Tasty Bites</h2>
+        <p>Restaurant &amp; Cafe</p>
+      </div>
+    </div>
+
+    <div class="footer-contact">
+      <div class="footer-divider"></div>
+      <div>
+        <div><i class="fa-solid fa-location-dot"></i><span>123 Food Street, Islamabad</span></div>
+        <div><i class="fa-solid fa-envelope"></i><span>info@tastybites.com</span></div>
+        <div><i class="fa-solid fa-phone"></i><span>+92 300 1234567</span></div>
+      </div>
+    </div>
+
+    <div class="footer-social">
+      <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </footer>
+  <!-- END: MainFooter -->
+
+</div>
+
+</body>
+</html>

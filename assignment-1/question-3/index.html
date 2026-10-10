@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orbit — Powerful devices, made for the way you actually work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* ============================================================
+   Assignment 1 — Question 3
+   Orbit — product advertisement page for laptops and phones
+   Written in plain HTML5 + CSS3 (no framework)
+   ============================================================ */
+
+/* ---------- 1. Design tokens ---------- */
+:root {
+  --navy:     #0a2a3b;
+  --navy-2:   #0d4152;
+  --dark:     #081f2c;
+  --teal:     #0a8399;
+  --coral:    #f2705f;
+  --coral-dk: #e05b4a;
+  --mint:     #cdeef2;
+  --lilac:    #e0dcfb;
+  --violet:   #5e4cb2;
+  --slate-50: #f8fafc;
+  --slate-100:#f1f5f9;
+  --slate-200:#e2e8f0;
+  --slate-400:#94a3b8;
+  --slate-500:#64748b;
+  --slate-600:#475569;
+  --slate-700:#334155;
+
+  --shadow-card:  0 12px 36px -6px rgba(10, 42, 59, 0.08), 0 4px 16px -4px rgba(10, 131, 153, 0.06);
+  --shadow-float: 0 20px 40px -10px rgba(10, 42, 59, 0.16), 0 8px 16px -6px rgba(10, 42, 59, 0.08);
+  --shadow-2xl:   0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- 2. Reset and base ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+  overflow-x: hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--slate-50);
+  color: var(--slate-700);
+  -webkit-font-smoothing: antialiased;
+}
+
+img  { display: block; }
+ul   { list-style: none; }
+a    { text-decoration: none; }
+svg  { display: block; }
+
+.mono { font-family: 'Space Grotesk', monospace; }
+
+/* Shared section heading block */
+.section-head {
+  max-width: 42rem;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+
+.section-head h2 {
+  margin-top: 8px;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--navy);
+}
+
+.section-head p {
+  margin-top: 12px;
+  font-size: 16px;
+  color: var(--slate-600);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.pill-mint {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--teal);
+  background-color: var(--mint);
+  border-radius: 9999px;
+}
+
+/* ---------- 3. Shared buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-coral {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: var(--coral);
+  box-shadow: 0 20px 25px -5px rgba(242, 112, 95, 0.3);
+}
+
+.btn-coral:hover { background-color: var(--coral-dk); }
+
+.btn-ghost {
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.btn-ghost:hover { background-color: rgba(255, 255, 255, 0.15); }
+
+.btn-outline-white {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-outline-white:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+.btn-coral-sm {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: var(--coral);
+  box-shadow: 0 10px 15px -3px rgba(242, 112, 95, 0.25);
+}
+
+.btn-coral-sm:hover { background-color: var(--coral-dk); }
+
+/* The outlined "Buy now" CTA required by the brief: a coral border
+   plus a second outline that appears, offset, on hover. */
+.btn-buy {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--coral);
+  background-color: #ffffff;
+  border: 2.5px solid var(--coral);
+  border-radius: 12px;
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-buy:hover {
+  outline-color: var(--coral);
+  transform: translateY(-1px);
+}
+
+.btn-buy svg { width: 16px; height: 16px; }
+
+/* Frosted floating chip used for the hero callouts */
+.glass-pill {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 32px -4px rgba(10, 42, 59, 0.15);
+}
+
+/* ============================================================
+   1. HERO SECTION
+   ============================================================ */
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 56px;
+  border: 1px solid rgba(13, 65, 82, 0.3);
+  border-radius: 34px;
+  box-shadow: var(--shadow-2xl);
+  background: linear-gradient(175deg, #0a2a3b 0%, #0d4152 65%, #ffffff 100%);
+}
+
+/* Top navigation bar */
+.hero-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-image: linear-gradient(to top right, var(--teal), var(--mint));
+  box-shadow: 0 10px 15px -3px rgba(20, 184, 166, 0.2);
+}
+
+.brand-mark svg { width: 24px; height: 24px; color: var(--navy); }
+
+.brand span {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 8px 24px;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover { color: #ffffff; }
+
+.nav-links a.active { font-weight: 600; color: #ffffff; }
+.nav-links a.active:hover { color: var(--mint); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Hero body: copy on the left, device photo on the right */
+.hero-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  padding: 64px 0 48px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mint);
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+}
+
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--coral);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+.hero-title {
+  font-size: 60px;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+.hero-title .line-1 { font-weight: 300; }
+.hero-title .line-2 { font-weight: 700; }
+
+/* Gradient text for the final line of the headline */
+.hero-title .line-3 {
+  font-weight: 800;
+  background-image: linear-gradient(to right, #ffffff, var(--mint), var(--teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-lead {
+  max-width: 36rem;
+  margin: 24px 0;
+  font-size: 18px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-ctas svg { width: 16px; height: 16px; transition: transform 0.2s ease; }
+.btn-coral:hover svg { transform: translateX(4px); }
+
+/* Social-proof row under the CTAs */
+.social-proof {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.avatar-stack { display: flex; }
+
+.avatar-stack span {
+  width: 28px;
+  height: 28px;
+  margin-right: -8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  box-shadow: 0 0 0 2px var(--navy);
+}
+
+.avatar-stack .a1 { background-color: var(--mint); }
+.avatar-stack .a2 { background-color: var(--lilac); }
+.avatar-stack .a3 { background-color: #ffffff; }
+
+/* Hero media column */
+.hero-media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Teal glow behind the device photo */
+.hero-glow {
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background-color: rgba(20, 184, 166, 0.2);
+  filter: blur(64px);
+  pointer-events: none;
+}
+
+.hero-frame {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  background-color: rgba(10, 42, 59, 0.4);
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-2xl);
+}
+
+.hero-frame img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.hero-frame:hover img { transform: scale(1.02); }
+
+.hero-sheen {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to top, rgba(10, 42, 59, 0.6), transparent 50%);
+  pointer-events: none;
+}
+
+/* Floating info chips over the photo */
+.chip {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+}
+
+.chip-battery { top: -12px;    left: -16px; }
+.chip-save    { bottom: -16px; right: -16px; box-shadow: var(--shadow-float); }
+
+.chip-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.chip-icon svg { width: 16px; height: 16px; }
+.chip-icon.mint  { background-color: var(--mint);  color: var(--teal); }
+.chip-icon.lilac { background-color: var(--lilac); color: var(--violet); }
+
+.chip-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--navy);
+}
+
+.chip-sub   { font-size: 11px; color: var(--slate-500); }
+.chip-sub.coral { color: var(--coral); font-weight: 600; }
+
+/* ============================================================
+   2. PARTNER LOGO STRIP
+   ============================================================ */
+.logo-strip {
+  padding: 48px 0;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.logo-strip .strip-label {
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--slate-400);
+}
+
+.logo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  opacity: 0.75;
+  filter: grayscale(1);
+  transition: filter 0.3s ease;
+}
+
+.logo-row:hover { filter: grayscale(0); }
+
+.logo-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--slate-600);
+}
+
+.logo-item span {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #ffffff;
+  border-radius: 6px;
+}
+
+.lg-linear { background-color: #1e293b; }
+.lg-vercel { background-color: var(--teal); }
+.lg-figma  { background-color: var(--coral); border-radius: 50%; }
+.lg-notion { background-color: #0f172a; }
+.lg-stripe { background-color: var(--navy); }
+.lg-github { background-color: var(--teal); border-radius: 50%; }
+
+/* ============================================================
+   3. PRODUCT CARDS
+   ============================================================ */
+.products { padding: 64px 0; }
+
+.product-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  justify-items: center;
+}
+
+/* Card: 300–400px wide, border + rounded corners, padding, margin,
+   box-shadow — exactly as the brief requires. */
+.product-card {
+  width: 100%;
+  max-width: 380px;
+  margin: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-color: #ffffff;
+  border: 2px solid rgba(226, 232, 240, 0.9);
+  border-radius: 22px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease;
+}
+
+.product-card:hover { border-color: rgba(10, 131, 153, 0.5); }
+
+.product-card.featured { border-color: rgba(10, 131, 153, 0.4); }
+.product-card.featured:hover { border-color: var(--teal); }
+
+/* "Popular choice" ribbon above the middle card */
+.ribbon {
+  position: absolute;
+  top: -14px;
+  right: 24px;
+  padding: 2px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--coral);
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Product image sits on a pastel tile and is constrained by width */
+.product-media {
+  position: relative;
+  width: 100%;
+  height: 224px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.product-media:hover img { transform: scale(1.05); }
+
+.media-mint  { background-color: rgba(205, 238, 242, 0.4); border: 1px solid var(--mint); }
+.media-lilac { background-color: rgba(224, 220, 251, 0.4); border: 1px solid var(--lilac); }
+.media-sky   { background-color: #f0f9ff;                  border: 1px solid #e0f2fe; }
+
+.media-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tag-new  { background-color: #ffffff;   color: var(--teal); }
+.tag-best { background-color: #ffffff;   color: var(--violet); }
+.tag-pro  { background-color: var(--navy); color: #ffffff; }
+
+.product-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.product-title-row h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.spec-chip {
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 9999px;
+}
+
+.chip-grey  { background-color: var(--slate-100); color: var(--slate-600); }
+.chip-lilac { background-color: var(--lilac);     color: var(--violet); }
+
+.product-desc {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--slate-600);
+}
+
+/* Feature list with tick bullets */
+.feature-list {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--slate-700);
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tick {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.tick-mint  { background-color: var(--mint);  color: var(--teal); }
+.tick-lilac { background-color: var(--lilac); color: var(--violet); }
+
+/* Price block uses a different background colour from the card */
+.price-foot {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--slate-100);
+}
+
+.price-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 14px;
+  color: #ffffff;
+  background-color: var(--navy);
+  border-radius: 12px;
+}
+
+.price-box .price-label {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.price-values {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.price-now {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.price-was {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: line-through;
+}
+
+.save-tag {
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mint);
+  background-color: rgba(10, 131, 153, 0.4);
+  border-radius: 4px;
+}
+
+/* ============================================================
+   4. WHY CHOOSE ORBIT
+   ============================================================ */
+.why { margin: 64px 0; }
+
+.why-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 64px;
+  color: #ffffff;
+  background-color: var(--navy);
+  border: 1px solid var(--navy-2);
+  border-radius: 34px;
+  box-shadow: var(--shadow-2xl);
+}
+
+.why-glow {
+  position: absolute;
+  right: -80px;
+  bottom: -80px;
+  width: 384px;
+  height: 384px;
+  border-radius: 50%;
+  background-color: rgba(10, 131, 153, 0.2);
+  filter: blur(64px);
+  pointer-events: none;
+}
+
+.why-head {
+  max-width: 42rem;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.why-head .eyebrow { color: var(--mint); }
+
+.why-head h2 {
+  margin-top: 8px;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+.why-head p {
+  margin-top: 12px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.why-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.why-media {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  padding: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+  box-shadow: var(--shadow-2xl);
+}
+
+.why-media img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.why-caption {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 24px;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.why-caption span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.why-caption p {
+  font-size: 11px;
+  color: var(--slate-500);
+}
+
+.benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 24px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.benefit:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+.benefit-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.benefit-icon svg { width: 24px; height: 24px; }
+.bi-mint   { background-color: var(--mint);  color: var(--navy); }
+.bi-lilac  { background-color: var(--lilac); color: var(--violet); }
+.bi-teal   { background-color: var(--mint);  color: var(--teal); }
+
+.benefit h4 {
+  margin-bottom: 4px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.benefit p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ============================================================
+   5. STATS BENTO GRID
+   ============================================================ */
+.stats { padding: 64px 0; }
+
+.bento-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.bento-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bento-card:hover { transform: translateY(-2px); }
+
+.bento-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bento-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bento-badge {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.bento-figure { margin: 24px 0; }
+
+.bento-figure .value {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--navy);
+}
+
+.bento-figure .caption {
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.bento-note {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--slate-600);
+}
+
+.bento-mint  { background-color: rgba(205, 238, 242, 0.6); border: 1px solid var(--mint); }
+.bento-mint  .bento-label { color: var(--teal); }
+.bento-mint  .bento-badge { color: var(--teal); }
+
+.bento-lilac { background-color: rgba(224, 220, 251, 0.6); border: 1px solid var(--lilac); }
+.bento-lilac .bento-label { color: var(--violet); }
+.bento-lilac .bento-badge { color: var(--violet); }
+
+.bento-white { background-color: #ffffff; border: 1px solid var(--slate-200); }
+.bento-white .bento-label { color: var(--coral); }
+.bento-white .bento-badge { background-color: rgba(242, 112, 95, 0.1); color: var(--coral); }
+
+.bento-navy  { background-color: var(--navy); color: #ffffff; }
+.bento-navy  .bento-label  { color: var(--mint); }
+.bento-navy  .bento-badge  { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
+.bento-navy  .value,
+.bento-navy  .caption      { color: #ffffff; }
+.bento-navy  .bento-note   { color: rgba(255, 255, 255, 0.7); }
+
+/* ============================================================
+   6. TRADE-IN BANNER
+   ============================================================ */
+.tradein { margin: 64px 0; }
+
+.tradein-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 64px;
+  border: 1px solid var(--navy-2);
+  border-radius: 34px;
+  box-shadow: var(--shadow-2xl);
+  background-image: linear-gradient(to right, var(--dark), var(--navy), var(--navy-2));
+}
+
+.tradein-grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.tradein-copy { color: #ffffff; }
+
+.tradein-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--coral);
+  background-color: rgba(242, 112, 95, 0.2);
+  border: 1px solid rgba(242, 112, 95, 0.3);
+  border-radius: 9999px;
+}
+
+.tradein-copy h2 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.tradein-copy h2 .accent { color: var(--mint); }
+
+.tradein-copy > p {
+  max-width: 36rem;
+  margin: 24px 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tradein-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.tradein-actions .fineprint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.tradein-media {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.tradein-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 24px;
+  background-color: rgba(10, 131, 153, 0.3);
+  filter: blur(40px);
+}
+
+.tradein-list {
+  position: relative;
+  padding: 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: var(--shadow-2xl);
+}
+
+.tradein-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tradein-item + .tradein-item {
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tradein-thumb {
+  width: 80px;
+  height: 64px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.tradein-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tradein-item .name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.tradein-item .credit {
+  font-size: 12px;
+  color: var(--mint);
+}
+
+/* ============================================================
+   7. FOOTER
+   ============================================================ */
+.site-footer {
+  margin-top: 80px;
+  padding: 64px 0 48px;
+  border-top: 1px solid var(--slate-200);
+}
+
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 56px;
+  color: var(--slate-600);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.footer-brand .mark {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background-color: var(--teal);
+  border-radius: 50%;
+}
+
+.footer-brand .mark svg { width: 20px; height: 20px; }
+
+.footer-brand span {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--navy);
+}
+
+.footer-about {
+  margin-bottom: 16px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--slate-500);
+}
+
+.footer-origin {
+  font-size: 12px;
+  color: var(--slate-400);
+}
+
+.footer-cols h4 {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.footer-cols ul { font-size: 12px; }
+
+.footer-cols li { margin-bottom: 8px; }
+
+.footer-cols a {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.footer-cols a:hover { color: var(--teal); }
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid var(--slate-100);
+  font-size: 12px;
+  color: var(--slate-400);
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer-legal a {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.footer-legal a:hover { color: var(--slate-600); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .hero-body,
+  .why-grid,
+  .tradein-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .nav-links { display: none; }
+
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .bento-grid   { grid-template-columns: repeat(2, 1fr); }
+  .footer-cols  { grid-template-columns: repeat(2, 1fr); }
+
+  .hero-title { font-size: 48px; }
+}
+
+@media (max-width: 768px) {
+  body { padding: 12px; }
+
+  .hero-panel,
+  .why-panel,
+  .tradein-panel { padding: 32px 24px; }
+
+  .hero-title { font-size: 36px; }
+  .hero-lead  { font-size: 16px; }
+
+  .section-head h2,
+  .why-head h2,
+  .tradein-copy h2 { font-size: 28px; }
+
+  .product-grid,
+  .bento-grid,
+  .footer-cols { grid-template-columns: 1fr; }
+
+  .product-card { margin: 0; }
+
+  .logo-row { gap: 32px; }
+
+  .footer-bottom { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== 1. HERO SECTION ==================== -->
+<header class="hero-panel">
+
+  <!-- Top navigation bar -->
+  <nav class="hero-nav">
+    <a class="brand" href="#">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+          <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
+          <ellipse cx="12" cy="12" rx="9" ry="4.5" stroke="currentColor" transform="rotate(-25 12 12)"/>
+        </svg>
+      </div>
+      <span>Orbit</span>
+    </a>
+
+    <div class="nav-links">
+      <a class="active" href="#hero">Home</a>
+      <a href="#products">Laptops</a>
+      <a href="#products">Phones</a>
+      <a href="#stats">Deals</a>
+      <a href="#footer">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn btn-outline-white">Sign in</button>
+      <button class="btn btn-coral-sm">Shop now</button>
+    </div>
+  </nav>
+
+  <!-- Hero content -->
+  <div class="hero-body">
+
+    <div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Next-generation hardware series now shipping
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line-1">Powerful devices,</span><br>
+        <span class="line-2">made for the way you</span><br>
+        <span class="line-3">actually work.</span>
+      </h1>
+
+      <p class="hero-lead">
+        Engineered for creators, developers, and thinkers. Orbit laptops and phones sync effortlessly
+        with zero bloatware, silent thermal cooling, and all-day endurance.
+      </p>
+
+      <div class="hero-ctas">
+        <a class="btn btn-coral" href="#products">
+          <span>Buy now</span>
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </a>
+        <a class="btn btn-ghost" href="#why-orbit">See the specs</a>
+      </div>
+
+      <div class="social-proof">
+        <div class="avatar-stack">
+          <span class="a1">4.9</span>
+          <span class="a2">★</span>
+          <span class="a3">✓</span>
+        </div>
+        <span>Trusted by 45,000+ engineers, writers and founders worldwide</span>
+      </div>
+    </div>
+
+    <!-- Device photo with floating chips -->
+    <div class="hero-media">
+      <div class="hero-glow"></div>
+
+      <div class="hero-frame">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmOLqSJ67gjtyJg42Xq-ujesKexNK7RMSDjsKRqMXwm0mKRBxJ10d5oqRXKP-uVlBR6UIAh-lJ42NfGryPKebSzpki7behm6MrZDO8Gzd8jSqToHYQyaX6XP4Ddom_0JKDZAOmyvPE3vrUDWQEWD45-pkGvdUoiZ-6jhyQHmD3Q8FwyXIojruQKy5s37NdPjdbOULOAQRQsIeCmcMjazoajXUKkc9xnsHEv2c8oMXg1huPqN0hWLbf"
+             alt="Orbit sleek laptop open with companion phone standing upright on desk">
+        <div class="hero-sheen"></div>
+      </div>
+
+      <div class="chip glass-pill chip-battery">
+        <div class="chip-icon mint">
+          <svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chip-title">18 hours of battery</div>
+          <div class="chip-sub">Real-world active workflow</div>
+        </div>
+      </div>
+
+      <div class="chip glass-pill chip-save">
+        <div class="chip-icon lilac">
+          <svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chip-title">Save $150</div>
+          <div class="chip-sub coral">Limited ecosystem bundle</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ==================== 2. PARTNER LOGO STRIP ==================== -->
+<section class="logo-strip">
+  <p class="strip-label">OPTIMIZED FOR MODERN SOFTWARE &amp; INDUSTRY TOOLS</p>
+  <div class="logo-row">
+    <div class="logo-item"><span class="lg-linear">V</span> Linear</div>
+    <div class="logo-item"><span class="lg-vercel">▲</span> Vercel</div>
+    <div class="logo-item"><span class="lg-figma">F</span> Figma</div>
+    <div class="logo-item"><span class="lg-notion">N</span> Notion</div>
+    <div class="logo-item"><span class="lg-stripe">S</span> Stripe</div>
+    <div class="logo-item"><span class="lg-github">✦</span> GitHub</div>
+  </div>
+</section>
+
+<!-- ==================== 3. PRODUCT CARDS ==================== -->
+<section class="products" id="products">
+  <div class="section-head">
+    <span class="pill-mint">Featured flagship devices</span>
+    <h2>Precision engineering. Built for creators.</h2>
+    <p>Choose the device that matches your speed, workflow, and portability demands.</p>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- CARD 1: Orbit Air 14 -->
+    <div class="product-card">
+      <div>
+        <div class="product-media media-mint">
+          <span class="media-tag tag-new">New</span>
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBThhyPVPZ-9wlTNlaYQdLQ30hfG45e_q0kxpc42rKKvljUZnECXomaQ0DRPB3_CP2TxDyNXEQU7JWAQrrn4g9fxvMXD7CDXph64C1b-xSYyXlcpNqBbmW3tWUpxd4Gho2b0z2KE8ggbzs5A-I6daLpw1AnUtvISFFWJd7R97ZpwPT09M9ZU7W8SMoukdsanqxNPFHvvMO_TSPItg7rRNZESTU1jWPjSQmg3vCeOi0UXxpmx0Y5O9Y2"
+               alt="Orbit Air 14 laptop space grey display">
+        </div>
+
+        <div class="product-title-row">
+          <h3>Orbit Air 14</h3>
+          <span class="spec-chip chip-grey">1.24 kg</span>
+        </div>
+        <p class="product-desc">
+          Ultra-thin featherweight laptop built for everyday coding, writing, and mobile productivity.
+        </p>
+
+        <ul class="feature-list">
+          <li><span class="tick tick-mint">✓</span><span>14.2" Liquid Pro Retina display (90 Hz)</span></li>
+          <li><span class="tick tick-mint">✓</span><span>Orbit M1 Octa-core processor</span></li>
+          <li><span class="tick tick-mint">✓</span><span>18-hour real-use silent battery life</span></li>
+          <li><span class="tick tick-mint">✓</span><span>16 GB unified RAM + 512 GB high-speed SSD</span></li>
+        </ul>
+      </div>
+
+      <div class="price-foot">
+        <div class="price-box">
+          <div>
+            <span class="price-label">Price</span>
+            <div class="price-values">
+              <span class="price-now">$1,199</span>
+              <span class="price-was">$1,349</span>
+            </div>
+          </div>
+          <span class="save-tag">Save $150</span>
+        </div>
+        <button class="btn-buy">
+          <span>Buy now</span>
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- CARD 2: Orbit Pulse 5 -->
+    <div class="product-card featured">
+      <div class="ribbon">Popular choice</div>
+      <div>
+        <div class="product-media media-lilac">
+          <span class="media-tag tag-best">Best seller</span>
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0lerjinukSzbq8HRxExP5GIrS7eRL6HvVJe5aEjAvQ_AXK60Zq1vfULp_9ggbnKwj16WlkR6YtBo41xb3MYLJ38iGOUitJfK3STx6ugozEDrhJgOMpTgucE9qPNSNr6sSgGg2RsMBzf7ibdLV2Cmw1rUfSxvkAHZk5BhSF0hJCbjoXGnuDNk1WrePgqBX-ehOtTMvrbAzVZ4gzIRJr8MCjTibrewypsnPFuDZTQXXr6gm1BjLa98G"
+               alt="Orbit Pulse 5 flagship phone in lilac finish">
+        </div>
+
+        <div class="product-title-row">
+          <h3>Orbit Pulse 5</h3>
+          <span class="spec-chip chip-lilac">5G Sub-6</span>
+        </div>
+        <p class="product-desc">
+          Flagship pocket powerhouse with triple camera studio optics and instant desktop mirroring.
+        </p>
+
+        <ul class="feature-list">
+          <li><span class="tick tick-lilac">✓</span><span>6.4" LTPO OLED display with 120 Hz refresh</span></li>
+          <li><span class="tick tick-lilac">✓</span><span>50 MP main + ultrawide + 3x telephoto cameras</span></li>
+          <li><span class="tick tick-lilac">✓</span><span>65 W wireless &amp; fast magnetic charging</span></li>
+          <li><span class="tick tick-lilac">✓</span><span>Titanium frame with IP68 water resistance</span></li>
+        </ul>
+      </div>
+
+      <div class="price-foot">
+        <div class="price-box">
+          <div>
+            <span class="price-label">Price</span>
+            <div class="price-values">
+              <span class="price-now">$799</span>
+              <span class="price-was">$899</span>
+            </div>
+          </div>
+          <span class="save-tag">Save $100</span>
+        </div>
+        <button class="btn-buy">
+          <span>Buy now</span>
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- CARD 3: Orbit Air 16 Pro -->
+    <div class="product-card">
+      <div>
+        <div class="product-media media-sky">
+          <span class="media-tag tag-pro">Pro</span>
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoNaXhmNE4oTsJZVKcZp3awIdwArpN7Ao4eC4d-PRaxU2udlymWmho3hnu5JOuP5Wc55U97rejhcl-2N2YstISo1lkr0h7e5l5kJwT4T3S_jkdZl7qN8VTf-DYfUNx61DHQE0h3q8qYWxeJ9GJ0bk1_8MydpGA_OKDzuaM_ssQnsCf1UnpdhXYG5MS9IesWvj9Nh7ed1DinVUvvYwcMZsXXCg5-jxPDXnmewnGmfXsiEvein2TagIk"
+               alt="Orbit Air 16 Pro high-performance workstation laptop">
+        </div>
+
+        <div class="product-title-row">
+          <h3>Orbit Air 16 Pro</h3>
+          <span class="spec-chip chip-grey">Workstation</span>
+        </div>
+        <p class="product-desc">
+          Unrestricted computing performance for compiling code, 3D rendering, and studio audio.
+        </p>
+
+        <ul class="feature-list">
+          <li><span class="tick tick-mint">✓</span><span>16.0" 3.2K TrueColor mini-LED screen (120 Hz)</span></li>
+          <li><span class="tick tick-mint">✓</span><span>Orbit M2 Max chip with 16-core GPU</span></li>
+          <li><span class="tick tick-mint">✓</span><span>Dual vapor chamber thermal cooling</span></li>
+          <li><span class="tick tick-mint">✓</span><span>32 GB memory + 1 TB PCIe 4.0 NVMe storage</span></li>
+        </ul>
+      </div>
+
+      <div class="price-foot">
+        <div class="price-box">
+          <div>
+            <span class="price-label">Price</span>
+            <div class="price-values">
+              <span class="price-now">$1,799</span>
+              <span class="price-was">$1,999</span>
+            </div>
+          </div>
+          <span class="save-tag">Save $200</span>
+        </div>
+        <button class="btn-buy">
+          <span>Buy now</span>
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== 4. WHY CHOOSE ORBIT ==================== -->
+<section class="why" id="why-orbit">
+  <div class="why-panel">
+    <div class="why-glow"></div>
+
+    <div class="why-head">
+      <span class="eyebrow">Hardware Philosophy</span>
+      <h2>Why choose Orbit devices?</h2>
+      <p>
+        We stripped out unnecessary gimmicks, pre-installed bloatware, and thermal throttling to give
+        you pure, quiet reliability.
+      </p>
+    </div>
+
+    <div class="why-grid">
+
+      <div>
+        <div class="why-media">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0lerjinukSzbq8HRxExP5GIrS7eRL6HvVJe5aEjAvQ_AXK60Zq1vfULp_9ggbnKwj16WlkR6YtBo41xb3MYLJ38iGOUitJfK3STx6ugozEDrhJgOMpTgucE9qPNSNr6sSgGg2RsMBzf7ibdLV2Cmw1rUfSxvkAHZk5BhSF0hJCbjoXGnuDNk1WrePgqBX-ehOtTMvrbAzVZ4gzIRJr8MCjTibrewypsnPFuDZTQXXr6gm1BjLa98G"
+               alt="Orbit Pulse smartphone titanium detailing">
+          <div class="why-caption glass-pill">
+            <span>Seamless Orbit Continuity</span>
+            <p>Clipboard, files, and screens handoff instantly</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="benefit">
+          <div class="benefit-icon bi-mint">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Pure clean OS with zero bloatware</h4>
+            <p>
+              Every Orbit machine boots clean in 4 seconds. No trial software, no telemetry popups,
+              and no manufacturer spyware running in the background.
+            </p>
+          </div>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon bi-lilac">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Silent thermals &amp; sustained clock speed</h4>
+            <p>
+              Dual vapor-chamber cooling maintains peak performance without thermal throttling or
+              loud fan noise during heavy builds and render tasks.
+            </p>
+          </div>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon bi-teal">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Effortless device handoff &amp; syncing</h4>
+            <p>
+              Copy code on your laptop and paste directly into your phone. Answer calls, reply to
+              messages, and use your phone as an ultra-HD web camera.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. STATS BENTO GRID ==================== -->
+<section class="stats" id="stats">
+  <div class="section-head">
+    <span class="eyebrow">Benchmark Verified</span>
+    <h2>Performance tested by real professionals</h2>
+    <p>Real numbers across sustained compile cycles and creative suites.</p>
+  </div>
+
+  <div class="bento-grid">
+
+    <div class="bento-card bento-mint">
+      <div class="bento-top">
+        <span class="bento-label">Architecture</span>
+        <span class="bento-badge">⚡</span>
+      </div>
+      <div class="bento-figure">
+        <div class="value">+40%</div>
+        <div class="caption">Faster build times</div>
+      </div>
+      <p class="bento-note">Tested against comparable 8-core silicon when running Rust and Next.js production builds.</p>
+    </div>
+
+    <div class="bento-card bento-lilac">
+      <div class="bento-top">
+        <span class="bento-label">Community</span>
+        <span class="bento-badge">★</span>
+      </div>
+      <div class="bento-figure">
+        <div class="value">89%</div>
+        <div class="caption">Recommend to peers</div>
+      </div>
+      <p class="bento-note">Surveyed among verified hardware purchasers who switched from legacy corporate laptops.</p>
+    </div>
+
+    <div class="bento-card bento-white">
+      <div class="bento-top">
+        <span class="bento-label">Fast Power</span>
+        <span class="bento-badge">🔋</span>
+      </div>
+      <div class="bento-figure">
+        <div class="value">65 W</div>
+        <div class="caption">Fast charging speed</div>
+      </div>
+      <p class="bento-note">Zero to 60% capacity in just 26 minutes with the included compact GaN adapter.</p>
+    </div>
+
+    <div class="bento-card bento-navy">
+      <div class="bento-top">
+        <span class="bento-label">Acoustics</span>
+        <span class="bento-badge">🔇</span>
+      </div>
+      <div class="bento-figure">
+        <div class="value">0 dB</div>
+        <div class="caption">Silent fanless mode</div>
+      </div>
+      <p class="bento-note">Orbit Air 14 stays completely inaudible during standard web, office, and creative tasks.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== 6. TRADE-IN BANNER ==================== -->
+<section class="tradein">
+  <div class="tradein-panel">
+    <div class="tradein-grid">
+
+      <div class="tradein-copy">
+        <div class="tradein-badge">Sustainable Hardware Program</div>
+        <h2>
+          Trade in your current device.<br>
+          <span class="accent">Get up to $650 toward Orbit.</span>
+        </h2>
+        <p>
+          Send us your old laptop or smartphone from any manufacturer. We calculate competitive
+          instant credit and handle secure data sanitization free of charge.
+        </p>
+        <div class="tradein-actions">
+          <button class="btn btn-coral-sm">Estimate trade-in value</button>
+          <span class="fineprint">Free shipping kit included • Prepaid return</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="tradein-media">
+          <div class="tradein-glow"></div>
+          <div class="tradein-list">
+
+            <div class="tradein-item">
+              <div class="tradein-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBThhyPVPZ-9wlTNlaYQdLQ30hfG45e_q0kxpc42rKKvljUZnECXomaQ0DRPB3_CP2TxDyNXEQU7JWAQrrn4g9fxvMXD7CDXph64C1b-xSYyXlcpNqBbmW3tWUpxd4Gho2b0z2KE8ggbzs5A-I6daLpw1AnUtvISFFWJd7R97ZpwPT09M9ZU7W8SMoukdsanqxNPFHvvMO_TSPItg7rRNZESTU1jWPjSQmg3vCeOi0UXxpmx0Y5O9Y2" alt="Trade in laptop">
+              </div>
+              <div>
+                <div class="name">Eligible laptop trade-in</div>
+                <div class="credit">Instant credit: $200 – $650</div>
+              </div>
+            </div>
+
+            <div class="tradein-item">
+              <div class="tradein-thumb">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0lerjinukSzbq8HRxExP5GIrS7eRL6HvVJe5aEjAvQ_AXK60Zq1vfULp_9ggbnKwj16WlkR6YtBo41xb3MYLJ38iGOUitJfK3STx6ugozEDrhJgOMpTgucE9qPNSNr6sSgGg2RsMBzf7ibdLV2Cmw1rUfSxvkAHZk5BhSF0hJCbjoXGnuDNk1WrePgqBX-ehOtTMvrbAzVZ4gzIRJr8MCjTibrewypsnPFuDZTQXXr6gm1BjLa98G" alt="Trade in smartphone">
+              </div>
+              <div>
+                <div class="name">Eligible smartphone trade-in</div>
+                <div class="credit">Instant credit: $120 – $420</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 7. FOOTER ==================== -->
+<footer class="site-footer" id="footer">
+  <div class="footer-cols">
+
+    <div>
+      <a class="footer-brand" href="#">
+        <div class="mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+            <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
+            <ellipse cx="12" cy="12" rx="9" ry="4.5" stroke="currentColor" transform="rotate(-25 12 12)"/>
+          </svg>
+        </div>
+        <span>Orbit</span>
+      </a>
+      <p class="footer-about">
+        Precision personal computing hardware and smartphones crafted for modern work, coding, and creative flow.
+      </p>
+      <p class="footer-origin">Designed in San Francisco.<br>Assembled responsibly.</p>
+    </div>
+
+    <div>
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#products">Orbit Air 14 Laptop</a></li>
+        <li><a href="#products">Orbit Air 16 Pro Laptop</a></li>
+        <li><a href="#products">Orbit Pulse 5 Smartphone</a></li>
+        <li><a href="#products">65W Compact GaN Charger</a></li>
+        <li><a href="#products">Orbit Magnetic Stand &amp; Dock</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Programs &amp; Support</h4>
+      <ul>
+        <li><a href="#">Device Trade-in Program</a></li>
+        <li><a href="#">Orbit Care+ Extended Warranty</a></li>
+        <li><a href="#">Education &amp; Developer Discount</a></li>
+        <li><a href="#">System Diagnostics &amp; Downloads</a></li>
+        <li><a href="#">Order Status &amp; Tracking</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Our Team</a></li>
+        <li><a href="#">Supply Chain Sustainability</a></li>
+        <li><a href="#">Privacy &amp; Hardware Security</a></li>
+        <li><a href="#">Terms of Hardware Sale</a></li>
+        <li><a href="#">Press &amp; Media Kit</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Orbit Computing Corp. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Settings</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

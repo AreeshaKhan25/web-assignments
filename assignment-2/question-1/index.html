@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Management System v3.0 — CUI Wah Campus</title>
+<!-- Font Awesome for interface and social icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ============================================================
+   Assignment 2 — Question 1
+   Campus Management System login portal (CUI Wah Campus)
+   Written in plain HTML5 + CSS3 (no framework)
+   ============================================================ */
+
+/* ---------- 1. Reset and page base ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+
+  /* Full-bleed campus photograph as the page background */
+  background-image: url('https://cuiwah.edu.pk/assets/img/footer-back.jpg');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+/* Soft dark overlay that lifts text contrast over the photo */
+.page-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- 2. Main layout ---------- */
+.main-area {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 8px;
+}
+
+/* The two side-by-side portal boxes */
+.portal-shell {
+  width: 100%;
+  max-width: 896px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- 3. Login panel (left) ---------- */
+.login-panel {
+  width: 50%;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.login-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cui-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.portal-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0d559e;
+}
+
+.portal-version {
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.portal-campus {
+  margin: 2px 0 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: #0d559e;
+}
+
+.sign-in-hint {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* ---------- 4. Form controls ---------- */
+.login-form {
+  width: 100%;
+}
+
+.field {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.input-custom {
+  width: 100%;
+  padding: 8px 36px 8px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 400;
+  border-radius: 2px;
+  background-color: #dce5ee;
+  border: 1px solid #b6c6d6;
+  color: #334155;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-custom:focus {
+  background-color: #e8eff5;
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 1px #1e3a8a;
+  outline: none;
+}
+
+.input-password {
+  letter-spacing: 0.1em;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/* Icon / toggle button parked on the right edge of a field */
+.field-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding-right: 12px;
+  font-size: 12px;
+  color: #4b5563;
+  pointer-events: none;
+}
+
+.field-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding-right: 12px;
+  font-size: 12px;
+  color: #4b5563;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.field-toggle:hover {
+  color: #1f2937;
+}
+
+.btn-cui-green {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 0;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  color: #ffffff;
+  background-color: #27963c;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-cui-green:hover {
+  background-color: #217f33;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.forgot-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1572c4;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.panel-footnote {
+  margin-top: 20px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #15803d;
+}
+
+/* ---------- 5. News panel (right) ---------- */
+.news-panel {
+  width: 50%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-left: 1px solid rgba(226, 232, 240, 0.5);
+  background-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.news-head {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.news-head h2 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0f5ca6;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+/* Frosted viewport that keeps the campus photo visible behind the feed */
+.news-body {
+  flex: 1;
+  padding: 16px 0;
+}
+
+/* ---------- 6. Footer ---------- */
+.site-footer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 8px 0 16px;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 14px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.footer-link {
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease-in-out;
+}
+
+.footer-link:hover {
+  color: #e2e8f0;
+}
+
+.social-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+  color: #ffffff;
+}
+
+.social-row a {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  font-size: 14px;
+  transition: opacity 0.15s ease;
+}
+
+.social-row a:hover {
+  opacity: 0.8;
+}
+
+/* ---------- 7. Responsive: stack the two panels on small screens ---------- */
+@media (max-width: 768px) {
+  .portal-shell {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .login-panel,
+  .news-panel {
+    width: 100%;
+  }
+
+  .news-panel {
+    border-left: none;
+    border-top: 1px solid rgba(226, 232, 240, 0.5);
+  }
+
+  .portal-title {
+    font-size: 18px;
+  }
+
+  .news-head h2 {
+    font-size: 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Soft vignette gradient overlay to match lighting and enhance text contrast -->
+<div class="page-overlay"></div>
+
+<!-- BEGIN: MainContent -->
+<main class="main-area">
+  <!-- Two side-by-side portal boxes -->
+  <div class="portal-shell">
+
+    <!-- BEGIN: LoginCard -->
+    <section class="login-panel">
+      <div class="login-body">
+
+        <!-- COMSATS University logo -->
+        <img class="cui-logo" src="https://crystalpng.com/wp-content/uploads/2022/02/COMSATS-University-logo.png" alt="COMSATS University Islamabad logo">
+
+        <!-- Titles -->
+        <h1 class="portal-title">
+          <span>Campus Management System</span>
+          <span class="portal-version">v3.0</span>
+        </h1>
+        <h2 class="portal-campus">CUI Wah Campus</h2>
+        <p class="sign-in-hint">Sign in to start your session</p>
+
+        <!-- Sign-in form -->
+        <form class="login-form" onsubmit="event.preventDefault();">
+
+          <!-- Email input -->
+          <div class="field">
+            <input class="input-custom" type="text" aria-label="Username or Email"
+                   placeholder="Username / Email" value="shahidkhan@ciitwah.edu.pk">
+            <span class="field-icon"><i class="fa-solid fa-envelope"></i></span>
+          </div>
+
+          <!-- Password input -->
+          <div class="field">
+            <input class="input-custom input-password" type="password" aria-label="Password"
+                   placeholder="Password" value="password123">
+            <button class="field-toggle" type="button" aria-label="Toggle password visibility">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+
+          <!-- Submit -->
+          <button class="btn-cui-green" type="submit">Sign In</button>
+
+          <!-- Forgot password -->
+          <a class="forgot-link" href="#">Forgot your password?</a>
+        </form>
+      </div>
+
+      <!-- Card footnote -->
+      <div class="panel-footnote">Developed By IT Center CUI Wah</div>
+    </section>
+    <!-- END: LoginCard -->
+
+    <!-- BEGIN: CampusNewsCard -->
+    <section class="news-panel">
+      <div class="news-head">
+        <h2>Campus News &amp; Events</h2>
+      </div>
+      <!-- Frosted feed area that lets the campus photo show through -->
+      <div class="news-body"></div>
+    </section>
+    <!-- END: CampusNewsCard -->
+
+  </div>
+</main>
+<!-- END: MainContent -->
+
+<!-- BEGIN: BottomNavigationFooter -->
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <!-- Quick portal links bar -->
+    <nav class="footer-nav" aria-label="Quick Links">
+      <a class="footer-link" href="#">Main Website</a>
+      <a class="footer-link" href="#">CDC</a>
+      <a class="footer-link" href="#">SSBC</a>
+      <a class="footer-link" href="#">ORIC</a>
+      <a class="footer-link" href="#">Portal</a>
+      <a class="footer-link" href="#">Students' Archive</a>
+      <a class="footer-link" href="#">Payroll</a>
+      <a class="footer-link" href="#">Energy Auditing App</a>
+      <a class="footer-link" href="#">CU-Online</a>
+      <a class="footer-link" href="#">Office 365</a>
+      <a class="footer-link" href="#">News Feed Android App</a>
+    </nav>
+
+    <!-- Social media icons -->
+    <div class="social-row">
+      <a href="#" aria-label="Facebook"><i class="fa-brands fa-square-facebook"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="#" aria-label="WordPress Website"><i class="fa-brands fa-wordpress"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+    </div>
+  </div>
+</footer>
+<!-- END: BottomNavigationFooter -->
+
+<script>
+  /* Show / hide the password when the eye button is clicked */
+  document.addEventListener('DOMContentLoaded', function () {
+    var toggleBtn = document.querySelector('.field-toggle');
+    var passInput = document.querySelector('.input-password');
+
+    if (toggleBtn && passInput) {
+      toggleBtn.addEventListener('click', function () {
+        var isPass = passInput.getAttribute('type') === 'password';
+        passInput.setAttribute('type', isPass ? 'text' : 'password');
+        toggleBtn.querySelector('i').className = isPass ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

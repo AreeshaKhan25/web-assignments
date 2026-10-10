@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Technologies — Assignment Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* ============================================================
+   Web Technologies — Assignment Portfolio
+   Landing page that routes to every question in both assignments.
+   Plain HTML5 + CSS3, no framework.
+   ============================================================ */
+
+:root {
+  --ink:      #0f1f2e;
+  --muted:    #5b6b7a;
+  --line:     #e3e9ee;
+  --surface:  #ffffff;
+  --page:     #f3f6f9;
+  --navy:     #11314a;
+  --teal:     #0f8a8a;
+  --amber:    #e3903c;
+  --shadow:   0 10px 30px -12px rgba(15, 31, 46, 0.18);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background-color: var(--page);
+  -webkit-font-smoothing: antialiased;
+}
+
+a   { text-decoration: none; color: inherit; }
+ul  { list-style: none; }
+img { display: block; }
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 72px 0 56px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0d2a40 0%, #11465c 55%, #0f8a8a 100%);
+}
+
+.kicker {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #bdf0ef;
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 9999px;
+}
+
+.hero h1 {
+  max-width: 20ch;
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.hero p {
+  max-width: 62ch;
+  margin-top: 18px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.hero-meta div .label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(189, 240, 239, 0.8);
+}
+
+.hero-meta div .value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ---------- Assignment sections ---------- */
+.assignment {
+  padding: 56px 0;
+}
+
+.assignment + .assignment {
+  border-top: 1px solid var(--line);
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.section-head h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.section-head p {
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.count-chip {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  background-color: #e4eef4;
+  border-radius: 9999px;
+}
+
+/* ---------- Question cards ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.q-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.q-card:hover {
+  transform: translateY(-3px);
+  border-color: #b9d6dd;
+  box-shadow: 0 18px 40px -14px rgba(15, 31, 46, 0.26);
+}
+
+/* Screenshot preview, cropped to the top of the page */
+.q-thumb {
+  height: 170px;
+  overflow: hidden;
+  background-color: #eef3f6;
+  border-bottom: 1px solid var(--line);
+}
+
+.q-thumb img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.q-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 20px;
+}
+
+.q-num {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0b5f5f;
+  background-color: #ddf1f0;
+  border-radius: 5px;
+}
+
+.q-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.q-card p {
+  flex: 1;
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.q-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--teal);
+}
+
+.q-open svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.2s ease;
+}
+
+.q-card:hover .q-open svg { transform: translateX(3px); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  padding: 32px 0;
+  color: #cfdbe4;
+  background-color: var(--navy);
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 13px;
+}
+
+.site-footer a { color: #8fd6d4; }
+.site-footer a:hover { color: #ffffff; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 36px; }
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .hero { padding: 48px 0 40px; }
+  .hero h1 { font-size: 28px; }
+  .hero p { font-size: 15px; }
+  .site-footer .wrap { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">Web Technologies</span>
+    <h1>HTML &amp; CSS Assignment Portfolio</h1>
+    <p>
+      Eight responsive webpages built with plain HTML5 and hand-written CSS3 — no frameworks,
+      no utility classes. Open any card below to view the live page.
+    </p>
+
+    <div class="hero-meta">
+      <div>
+        <span class="label">Submitted by</span>
+        <span class="value">Areesha Khan</span>
+      </div>
+      <div>
+        <span class="label">Assignments</span>
+        <span class="value">2</span>
+      </div>
+      <div>
+        <span class="label">Questions</span>
+        <span class="value">8</span>
+      </div>
+      <div>
+        <span class="label">Built with</span>
+        <span class="value">HTML5 &amp; CSS3</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== ASSIGNMENT 1 ==================== -->
+<section class="assignment">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Assignment 1</h2>
+        <p>Components, layout, the box model, and full-page composition.</p>
+      </div>
+      <span class="count-chip">5 questions</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="q-card" href="assignment-1/question-1/">
+        <div class="q-thumb"><img src="assignment-1/question-1/screenshot.png" alt="Practical questions showcase"></div>
+        <div class="q-body">
+          <span class="q-num">Question 1</span>
+          <h3>Practical Questions Showcase</h3>
+          <p>Eight small UI components — profile card, product cards, notice box, login form, header, about section, faculty cards and a footer.</p>
+          <span class="q-open">Open page
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="q-card" href="assignment-1/question-2/">
+        <div class="q-thumb"><img src="assignment-1/question-2/screenshot.png" alt="University admission webpage"></div>
+        <div class="q-body">
+          <span class="q-num">Question 2</span>
+          <h3>University Admission Webpage</h3>
+          <p>A COMSATS admissions page with programme cards, requirements, important dates and a highlighted application box using outline and min/max width.</p>
+          <span class="q-open">Open page
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="q-card" href="assignment-1/question-3/">
+        <div class="q-thumb"><img src="assignment-1/question-3/screenshot.png" alt="Product advertisement page"></div>
+        <div class="q-body">
+          <span class="q-num">Question 3</span>
+          <h3>Product Advertisement Page</h3>
+          <p>Laptop and smartphone product cards with image, description, feature list, a distinct price panel and an outlined "Buy Now" button.</p>
+          <span class="q-open">Open page
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="q-card" href="assignment-1/question-4/">
+        <div class="q-thumb"><img src="assignment-1/question-4/screenshot.png" alt="Faculty portal login"></div>
+        <div class="q-body">
+          <span class="q-num">Question 4</span>
+          <h3>Faculty Portal Login</h3>
+          <p>A split-screen CUOnline Faculty Console sign-in: a gradient brand panel beside a card with validated fields, a captcha and a password toggle.</p>
+          <span class="q-open">Open page
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="q-card" href="assignment-1/question-5/">
+        <div class="q-thumb"><img src="assignment-1/question-5/screenshot.png" alt="Restaurant menu website"></div>
+        <div class="q-body">
+          <span class="q-num">Question 5</span>
+          <h3>Restaurant Menu Website</h3>
+          <p>Tasty Bites — a complete page with header, hero banner, four colour-themed menu categories built from CSS variables, and a contact footer.</p>
+          <span class="q-open">Open page
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ASSIGNMENT 2 ==================== -->
+<section class="assignment">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Assignment 2</h2>
+        <p>Forms, sidebars, web typography and navigation patterns.</p>
+      </div>
+      <span class="count-chip">3 questions</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="q-card" href="assignment-2/question-1/">
+        <div class="q-thumb"><img src="assignment-2/question-1/screenshot.png" alt="Campus management system login"></div>
+        <div class="q-body">
+          <span class="q-num">Question 1</span>
+          <h3>Campus Management System</h3>
+          <p>A CUI Wah login portal over a full-bleed campus photograph, with a translucent sign-in card, a news panel and a quick-links footer.</p>
+          <span class="q-open">Open page
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="q-card" href="assignment-2/question-2/">
+        <div class="q-thumb"><img src="assignment-2/question-2/screenshot.png" alt="Sidebar, fonts and horizontal navigation"></div>
+        <div class="q-body">
+          <span class="q-num">Question 2</span>
+          <h3>Sidebar, Fonts &amp; Horizontal Nav</h3>
+          <p>All three parts on one page: a styled sidebar with its own background, width, padding and border; two Google Fonts; and a horizontal navigation list.</p>
+          <span class="q-open">Open page
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="q-card" href="assignment-2/question-3/">
+        <div class="q-thumb"><img src="assignment-2/question-3/screenshot.png" alt="Content marketing contact form"></div>
+        <div class="q-body">
+          <span class="q-num">Question 3</span>
+          <h3>Contact Form Page</h3>
+          <p>A two-column enquiry page on a CSS-generated teal pattern, with a circular avatar frame and a styled form including a custom select control.</p>
+          <span class="q-open">Open page
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>© 2026 Areesha Khan — Web Technologies assignment portfolio.</p>
+    <p>Built with plain HTML5 &amp; CSS3 · <a href="https://github.com/AreeshaKhan25">GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
